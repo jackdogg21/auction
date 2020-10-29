@@ -1,3 +1,7 @@
+# Since configuration is shared in umbrella projects, this file
+# should only configure the :auction_web application itself
+# and only for organization purposes. All other config goes to
+# the umbrella root.
 use Mix.Config
 
 # For development, we disable any cache and enable
@@ -17,7 +21,7 @@ config :auction_web, AuctionWeb.Endpoint,
       "--mode",
       "development",
       "--watch-stdin",
-      cd: Path.expand("../apps/auction_web/assets", __DIR__)
+      cd: Path.expand("../assets", __DIR__)
     ]
   ]
 
@@ -49,9 +53,9 @@ config :auction_web, AuctionWeb.Endpoint,
 config :auction_web, AuctionWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/auction_web/(live|views)/.*(ex)$",
-      ~r"lib/auction_web/templates/.*(eex)$"
+      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/gettext/.*(po)$},
+      ~r{lib/auction_web/views/.*(ex)$},
+      ~r{lib/auction_web/templates/.*(eex)$}
     ]
   ]

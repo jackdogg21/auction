@@ -8,11 +8,9 @@ defmodule AuctionWeb.ConnCase do
   to build common data structures and query the data layer.
 
   Finally, if the test case interacts with the database,
-  we enable the SQL sandbox, so changes done to the database
-  are reverted at the end of every test. If you are using
-  PostgreSQL, you can even run database tests asynchronously
-  by setting `use AuctionWeb.ConnCase, async: true`, although
-  this option is not recommended for other databases.
+  it cannot be async. For this reason, every test runs
+  inside a transaction which is reset at the beginning
+  of the test unless the test case is marked as async.
   """
 
   use ExUnit.CaseTemplate
@@ -20,10 +18,7 @@ defmodule AuctionWeb.ConnCase do
   using do
     quote do
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
-      import AuctionWeb.ConnCase
-
+      use Phoenix.ConnTest
       alias AuctionWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing

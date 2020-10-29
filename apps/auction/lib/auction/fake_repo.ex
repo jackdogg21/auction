@@ -19,18 +19,18 @@ defmodule Auction.FakeRepo do
       title: "U2 - Achtung Baby on CD",
       description: "The sound of 4 men chopping down The Joshua Tree",
       ends_at: ~N[2018-11-05 03:12:29]
-    }
+    },
   ]
 
   def all(Item), do: @items
 
   def get!(Item, id) do
-    Enum.find(@items, fn item -> item.id === id end)
+    Enum.find(@items, fn(item) -> item.id === id end)
   end
 
   def get_by(Item, attrs) do
-    Enum.find(@items, fn item ->
-      Enum.all?(Map.keys(attrs), fn key ->
+    Enum.find(@items, fn(item) ->
+      Enum.all?(Map.keys(attrs), fn(key) ->
         Map.get(item, key) === attrs[key]
       end)
     end)

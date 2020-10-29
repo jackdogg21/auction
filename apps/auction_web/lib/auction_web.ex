@@ -20,7 +20,6 @@ defmodule AuctionWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: AuctionWeb
-
       import Plug.Conn
       import AuctionWeb.Gettext
       alias AuctionWeb.Router.Helpers, as: Routes
@@ -34,18 +33,20 @@ defmodule AuctionWeb do
         namespace: AuctionWeb
 
       # Import convenience functions from controllers
-      import Phoenix.Controller,
-        only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
+      import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 
-      # Include shared imports and aliases for views
-      unquote(view_helpers())
+      # Use all HTML functionality (forms, tags, etc)
+      use Phoenix.HTML
+
+      import AuctionWeb.ErrorHelpers
+      import AuctionWeb.Gettext
+      alias AuctionWeb.Router.Helpers, as: Routes
     end
   end
 
   def router do
     quote do
       use Phoenix.Router
-
       import Plug.Conn
       import Phoenix.Controller
     end
@@ -55,20 +56,6 @@ defmodule AuctionWeb do
     quote do
       use Phoenix.Channel
       import AuctionWeb.Gettext
-    end
-  end
-
-  defp view_helpers do
-    quote do
-      # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
-
-      # Import basic rendering functionality (render, render_layout, etc)
-      import Phoenix.View
-
-      import AuctionWeb.ErrorHelpers
-      import AuctionWeb.Gettext
-      alias AuctionWeb.Router.Helpers, as: Routes
     end
   end
 
