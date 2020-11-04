@@ -73,9 +73,9 @@ defmodule Auction do
   def get_bids_for_user(user) do
     query =
       from(b in Bid,
-        where: b.username == ^user.id,
-        order_by: [:desc, :inserted_at],
-        preload: [:item],
+        where: b.user_id == ^user.id,
+        order_by: [desc: :inserted_at],
+        preload: :item,
         limit: 10
       )
 
