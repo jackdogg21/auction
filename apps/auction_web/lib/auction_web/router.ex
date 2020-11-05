@@ -31,7 +31,9 @@ defmodule AuctionWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", AuctionWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", AuctionWeb.Api do
+    pipe_through :api
+
+    resources "/items", ItemController, only: [:index, :show]
+  end
 end
