@@ -62,14 +62,16 @@ if (match) {
 
   channel.on("new_bid", data => {
     console.log("New bid recieved", data);
+    const elem = document.getElementById("bids");
+    elem.insertAdjacentHTML("afterbegin", data.body);
   });
 
   channel.join()
     .receive("ok", resp => { 
-      console.log("Joined successfully", resp) 
+      console.log("Joined successfully", resp);
     })
     .receive("error", resp => { 
-      console.log("Unable to join", resp) 
+      console.log("Unable to join", resp);
     });
 }
 
