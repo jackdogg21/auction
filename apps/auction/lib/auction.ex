@@ -1,9 +1,40 @@
 defmodule Auction do
+  @moduledoc """
+  Provides functions for interacting with the database layer of an Auction application.
+  In order to keep database concerns separate from the rest of an application, these
+  functions are provided. Any interaction you need to do with the database can be done
+  from within these functions. See an individual function's documentation for more
+  information and usage examples (like `Auction.get_user_by_username_and_password/2`).
+  """
+
   alias Auction.{Bid, Item, Repo, User, Password}
   import Ecto.Query
 
   @repo Repo
 
+  @doc """
+  Retrieves a user from the database matching the provided username and password
+
+  ## Return values
+
+  Depending on what is found in the database, two different values could be returned:
+
+    * `Auction.User` struct: `Auction.User` record was found that matched the `username` and `password` provided
+    * `false`: No `Auction.User` could be found
+
+  You can then use the returned value to determine if the User is authorized in the application. If `Auction.User`
+  is _not_ found based on the `username`, the computational work of hashing a password is still done.
+
+  ## Examples
+
+      iex> insert_user(%{username: "geo", password: "example", password_confirmation: "example", email_address: "test@example.com"})
+      ...> result = get_user_by_username_and_password("geo", "example")
+      ...> match?(%Auction.User{username: "geo"}, result)
+      true
+
+      iex> get_user_by_username_and_password("no_user", "bad_password")
+      false
+  """
   def get_user_by_username_and_password(username, password) do
     with user when not is_nil(user) <- @repo.get_by(User, %{username: username}),
          true <- Password.verify_with_hash(password, user.hashed_password) do
